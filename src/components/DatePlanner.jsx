@@ -18,7 +18,7 @@ const formatTime12Hour = (time24) => {
   return `${hour12}:${minutes} ${ampm}`
 }
 
-const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange }) => {
+const DatePlanner = ({ openForm, onFormOpenChange }) => {
   // Load plans from localStorage on mount
   const [plans, setPlans] = useState(() => {
     try {

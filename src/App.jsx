@@ -6,7 +6,6 @@ import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 
 function App() {
-  const [selectedDate, setSelectedDate] = useState(null)
   const [openPlannerForm, setOpenPlannerForm] = useState(false)
 
   return (
@@ -15,8 +14,6 @@ function App() {
       <Hero />
       <DateIdeas />
       <DatePlanner 
-        selectedDate={selectedDate} 
-        setSelectedDate={setSelectedDate}
         openForm={openPlannerForm}
         onFormOpenChange={setOpenPlannerForm}
       />
