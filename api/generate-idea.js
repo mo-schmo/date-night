@@ -70,44 +70,22 @@ export default async function handler(req, res) {
 }
 
 async function callHuggingFace(apiKey, params) {
-  const model = process.env.HF_MODEL || 'meta-llama/Llama-3.1-8B-Instruct:novita'
+  const model = process.env.HF_MODEL || 'meta-llama/Llama-3.1-8B-Instruct'
   
   const prompt = buildPrompt(params)
   
   // Initialize Hugging Face Inference client
-  const hf = new InferenceClient(apiKey)
+  const client = new InferenceClient(apiKey)
   
   try {
     // Use the textGeneration method from the library
-    const response = await hf.textGeneration({
-      model,
-      inputs: prompt,
-      parameters: {
-        max_new_tokens: 200,
-        temperature: 0.7,
-        return_full_text: false,
-      },
+    const response = await client.chatCompletion({
+      model: model,
+      messages: [
+        { role: 'user', content: prompt }
+      ]
     })
-    
-    // The library returns the generated text directly or in generated_text property
-    let generatedText = null
-    
-    if (typeof response === 'string') {
-      generatedText = response
-    } else if (response.generated_text) {
-      generatedText = response.generated_text
-    } else if (Array.isArray(response) && response[0]?.generated_text) {
-      generatedText = response[0].generated_text
-    } else {
-      // Try to extract text from any other format
-      generatedText = JSON.stringify(response)
-    }
-    
-    if (!generatedText) {
-      throw new Error('No response from Hugging Face API')
-    }
-
-    return parseLLMResponse(generatedText)
+    return parseLLMResponse(response.choices[0].message.content)
   } catch (error) {
     // Provide more detailed error information
     if (error.message) {
