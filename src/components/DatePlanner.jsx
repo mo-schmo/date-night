@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Calendar, Clock, MapPin, Plus, X } from 'lucide-react'
+import { Calendar, Clock, MapPin, Plus, X, Edit } from 'lucide-react'
 
 const STORAGE_KEY = 'dateNightPlans'
 
@@ -28,6 +28,7 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
   })
   
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState(null)
 
   // Handle external form open trigger
   useEffect(() => {
@@ -39,6 +40,7 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
       }
     }
   }, [openForm, onFormOpenChange])
+  
   const [formData, setFormData] = useState({
     title: '',
     date: '',
@@ -56,17 +58,55 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
     }
   }, [plans])
 
+  const handleEdit = (plan) => {
+    setFormData({
+      title: plan.title || '',
+      date: plan.date || '',
+      time: plan.time || '',
+      location: plan.location || '',
+      notes: plan.notes || ''
+    })
+    setEditingId(plan.id)
+    setShowForm(true)
+    // Scroll to form
+    setTimeout(() => {
+      const formElement = document.querySelector('form')
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 100)
+  }
+
+  const handleCancel = () => {
+    setFormData({ title: '', date: '', time: '', location: '', notes: '' })
+    setEditingId(null)
+    setShowForm(false)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (formData.title && formData.date) {
-      setPlans([...plans, { ...formData, id: Date.now() }])
+      if (editingId) {
+        // Update existing plan
+        setPlans(plans.map(plan => 
+          plan.id === editingId 
+            ? { ...formData, id: editingId }
+            : plan
+        ))
+      } else {
+        // Create new plan
+        setPlans([...plans, { ...formData, id: Date.now() }])
+      }
       setFormData({ title: '', date: '', time: '', location: '', notes: '' })
+      setEditingId(null)
       setShowForm(false)
     }
   }
 
   const handleDelete = (id) => {
-    setPlans(plans.filter(plan => plan.id !== id))
+    if (window.confirm('Are you sure you want to delete this date plan?')) {
+      setPlans(plans.filter(plan => plan.id !== id))
+    }
   }
 
   // Sort plans by date (desc) and time (desc)
@@ -112,10 +152,12 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
               className="bg-white rounded-2xl p-8 shadow-xl mb-8"
             >
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-romantic font-semibold text-gray-900">New Date Plan</h3>
+                <h3 className="text-2xl font-romantic font-semibold text-gray-900">
+                  {editingId ? 'Edit Date Plan' : 'New Date Plan'}
+                </h3>
                 <button
                   type="button"
-                  onClick={() => setShowForm(false)}
+                  onClick={handleCancel}
                   className="text-gray-400 hover:text-gray-600"
                 >
                   <X className="h-6 w-6" />
@@ -180,12 +222,23 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
                   />
                 </div>
                 
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
-                >
-                  Save Plan
-                </button>
+                <div className="flex gap-3">
+                  <button
+                    type="submit"
+                    className="flex-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
+                  >
+                    {editingId ? 'Update Plan' : 'Save Plan'}
+                  </button>
+                  {editingId && (
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:border-gray-400 transition-all"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
               </div>
             </form>
           )}
@@ -203,7 +256,7 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
                   className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all"
                 >
                   <div className="flex justify-between items-start mb-4">
-                    <div>
+                    <div className="flex-1">
                       <h3 className="text-2xl font-romantic font-semibold text-gray-900 mb-2">
                         {plan.title}
                       </h3>
@@ -228,12 +281,22 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
                         )}
                       </div>
                     </div>
-                    <button
-                      onClick={() => handleDelete(plan.id)}
-                      className="text-gray-400 hover:text-red-500 transition-colors"
-                    >
-                      <X className="h-5 w-5" />
-                    </button>
+                    <div className="flex items-center gap-2 ml-4">
+                      <button
+                        onClick={() => handleEdit(plan)}
+                        className="text-gray-400 hover:text-pink-500 transition-colors"
+                        title="Edit plan"
+                      >
+                        <Edit className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(plan.id)}
+                        className="text-gray-400 hover:text-red-500 transition-colors"
+                        title="Delete plan"
+                      >
+                        <X className="h-5 w-5" />
+                      </button>
+                    </div>
                   </div>
                   {plan.notes && (
                     <p className="text-gray-600 mt-4 pl-4 border-l-4 border-pink-200">
@@ -251,4 +314,3 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
 }
 
 export default DatePlanner
-

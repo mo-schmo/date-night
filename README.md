@@ -66,7 +66,7 @@ date-night/
 ```
 
 ## Features to Implement
-- [ ] Edit functionality
+- [X] Edit functionality
 - [ ] Categories/tags
 - [ ] Countdown timer
 - [ ] Search & filter
