@@ -24,21 +24,6 @@ const Footer = () => {
               <li><a href="#planner" className="hover:text-white transition-colors">Planner</a></li>
             </ul>
           </div>
-          
-          <div>
-            <h4 className="font-semibold mb-4">Connect</h4>
-            <div className="flex space-x-4">
-              <a href="#" className="hover:scale-110 transition-transform">
-                <Instagram className="h-6 w-6" />
-              </a>
-              <a href="#" className="hover:scale-110 transition-transform">
-                <Facebook className="h-6 w-6" />
-              </a>
-              <a href="#" className="hover:scale-110 transition-transform">
-                <Twitter className="h-6 w-6" />
-              </a>
-            </div>
-          </div>
         </div>
         
         <div className="border-t border-pink-400 pt-8 text-center text-pink-100">
