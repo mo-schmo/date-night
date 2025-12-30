@@ -1,17 +1,6 @@
 import { InferenceClient } from '@huggingface/inference'
+import 'dotenv/config'
 
-// Load environment variables from .env.local in development
-// Vercel dev should load .env.local automatically, but we add explicit loading as fallback
-if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
-  try {
-    const { config } = require('dotenv')
-    const path = require('path')
-    config({ path: path.resolve(process.cwd(), '.env.local') })
-  } catch (e) {
-    // dotenv not available or .env.local doesn't exist - that's okay
-    // Vercel dev should handle it
-  }
-}
 
 export default async function handler(req, res) {
   // Set CORS headers
