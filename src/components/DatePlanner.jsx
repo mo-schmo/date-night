@@ -317,6 +317,7 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
                           ul: ({node, ...props}) => <ul className="list-disc pl-6 my-2 space-y-1 text-gray-600" {...props} />,
                           ol: ({node, ...props}) => <ol className="list-decimal pl-6 my-2 space-y-1 text-gray-600" {...props} />,
                           li: ({node, ...props}) => <li className="my-1 text-gray-600" {...props} />,
+                          a: ({node, ...props}) => <a className="text-pink-600 no-underline hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
                         }}
                       >
                         {plan.notes}
