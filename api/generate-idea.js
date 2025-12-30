@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     }
 
     // Get API key from environment variables
-    const hfApiKey = "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"
+    const hfApiKey = process.env.HUGGINGFACE_API_KEY
     
     // Debug logging (remove in production)
     if (process.env.NODE_ENV !== 'production') {
