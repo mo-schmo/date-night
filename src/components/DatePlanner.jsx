@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Calendar, Clock, MapPin, Plus, X, Edit } from 'lucide-react'
+import MarkdownEditor from './MarkdownEditor'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 const STORAGE_KEY = 'dateNightPlans'
 
@@ -212,13 +215,10 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Notes</label>
-                  <textarea
+                  <MarkdownEditor
                     value={formData.notes}
-                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    rows="3"
-                    placeholder="Any special notes or reminders..."
+                    onChange={(value) => setFormData({ ...formData, notes: value })}
+                    placeholder="Any special notes or reminders... (Markdown supported)"
                   />
                 </div>
                 
@@ -299,9 +299,29 @@ const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange
                     </div>
                   </div>
                   {plan.notes && (
-                    <p className="text-gray-600 mt-4 pl-4 border-l-4 border-pink-200">
-                      {plan.notes}
-                    </p>
+                    <div className="mt-4 pl-4 border-l-4 border-pink-200 prose prose-sm max-w-none 
+                      prose-headings:text-gray-900 prose-headings:font-romantic prose-headings:font-semibold prose-headings:mt-4 prose-headings:mb-2
+                      prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-base
+                      prose-p:text-gray-600 prose-p:my-2
+                      prose-strong:text-gray-900 prose-strong:font-semibold
+                      prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline
+                      prose-ul:my-2 prose-ul:list-disc prose-ul:pl-6 prose-ul:text-gray-600
+                      prose-ol:my-2 prose-ol:list-decimal prose-ol:pl-6 prose-ol:text-gray-600
+                      prose-li:my-1 prose-li:text-gray-600">
+                      <ReactMarkdown 
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          h1: ({node, ...props}) => <h1 className="text-2xl font-bold mb-3 mt-4 text-gray-900 font-romantic" {...props} />,
+                          h2: ({node, ...props}) => <h2 className="text-xl font-bold mb-2 mt-3 text-gray-900 font-romantic" {...props} />,
+                          h3: ({node, ...props}) => <h3 className="text-lg font-semibold mb-2 mt-3 text-gray-900 font-romantic" {...props} />,
+                          ul: ({node, ...props}) => <ul className="list-disc pl-6 my-2 space-y-1 text-gray-600" {...props} />,
+                          ol: ({node, ...props}) => <ol className="list-decimal pl-6 my-2 space-y-1 text-gray-600" {...props} />,
+                          li: ({node, ...props}) => <li className="my-1 text-gray-600" {...props} />,
+                        }}
+                      >
+                        {plan.notes}
+                      </ReactMarkdown>
+                    </div>
                   )}
                 </div>
               ))}
