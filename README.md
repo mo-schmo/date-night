@@ -65,6 +65,16 @@ date-night/
 └── vite.config.js
 ```
 
+## Features to Implement
+- [ ] Edit functionality
+- [ ] Categories/tags
+- [ ] Countdown timer
+- [ ] Search & filter
+- [ ] Date idea generator
+- [ ] Weather integration
+- [ ] Photo gallery
+- [ ] Export to calendar
+
 ## License
 
 MIT
