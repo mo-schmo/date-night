@@ -20,11 +20,19 @@ npm install
 
 ### Development
 
+**Frontend only:**
 ```bash
 npm run dev
 ```
 
+**Frontend + Backend (Recommended):**
+```bash
+npm run dev:full
+```
+
 The app will be available at `http://localhost:5173`
+
+> **Note:** For full functionality including the AI date idea generator, you need to run the backend. See [LOCAL_DEVELOPMENT.md](./LOCAL_DEVELOPMENT.md) for detailed instructions.
 
 ### Build
 
@@ -44,6 +52,8 @@ npm run preview
 - **Vite** - Build tool and dev server
 - **Tailwind CSS** - Utility-first CSS framework
 - **Lucide React** - Icon library
+- **Vercel Serverless Functions** - Backend API routes
+- **Hugging Face / Together.ai** - LLM API for date idea generation
 
 ## Project Structure
 
@@ -67,13 +77,18 @@ date-night/
 
 ## Features to Implement
 - [X] Edit functionality
+- [X] Date idea generator (AI-powered)
 - [ ] Categories/tags
 - [ ] Countdown timer
 - [ ] Search & filter
-- [ ] Date idea generator
 - [ ] Weather integration
 - [ ] Photo gallery
 - [ ] Export to calendar
+
+## Additional Documentation
+
+- [Local Development Guide](./LOCAL_DEVELOPMENT.md) - How to run the backend locally
+- [LLM Setup Guide](./SETUP_LLM.md) - How to configure the AI date idea generator
 
 ## License
 
