@@ -7,13 +7,19 @@ import Navbar from './components/Navbar'
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(null)
+  const [openPlannerForm, setOpenPlannerForm] = useState(false)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
-      <Navbar />
+      <Navbar onGetStarted={() => setOpenPlannerForm(true)} />
       <Hero />
       <DateIdeas />
-      <DatePlanner selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+      <DatePlanner 
+        selectedDate={selectedDate} 
+        setSelectedDate={setSelectedDate}
+        openForm={openPlannerForm}
+        onFormOpenChange={setOpenPlannerForm}
+      />
       <Footer />
     </div>
   )

@@ -15,7 +15,7 @@ const formatTime12Hour = (time24) => {
   return `${hour12}:${minutes} ${ampm}`
 }
 
-const DatePlanner = ({ selectedDate, setSelectedDate }) => {
+const DatePlanner = ({ selectedDate, setSelectedDate, openForm, onFormOpenChange }) => {
   // Load plans from localStorage on mount
   const [plans, setPlans] = useState(() => {
     try {
@@ -28,6 +28,17 @@ const DatePlanner = ({ selectedDate, setSelectedDate }) => {
   })
   
   const [showForm, setShowForm] = useState(false)
+
+  // Handle external form open trigger
+  useEffect(() => {
+    if (openForm) {
+      setShowForm(true)
+      // Reset the trigger after opening
+      if (onFormOpenChange) {
+        onFormOpenChange(false)
+      }
+    }
+  }, [openForm, onFormOpenChange])
   const [formData, setFormData] = useState({
     title: '',
     date: '',
