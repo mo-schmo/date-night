@@ -1,8 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Calendar, Clock, MapPin, Plus, X } from 'lucide-react'
 
+const STORAGE_KEY = 'dateNightPlans'
+
+// Helper function to convert 24-hour format to 12-hour format
+const formatTime12Hour = (time24) => {
+  if (!time24) return ''
+  
+  const [hours, minutes] = time24.split(':')
+  const hour = parseInt(hours, 10)
+  const ampm = hour >= 12 ? 'PM' : 'AM'
+  const hour12 = hour % 12 || 12
+  
+  return `${hour12}:${minutes} ${ampm}`
+}
+
 const DatePlanner = ({ selectedDate, setSelectedDate }) => {
-  const [plans, setPlans] = useState([])
+  // Load plans from localStorage on mount
+  const [plans, setPlans] = useState(() => {
+    try {
+      const savedPlans = localStorage.getItem(STORAGE_KEY)
+      return savedPlans ? JSON.parse(savedPlans) : []
+    } catch (error) {
+      console.error('Error loading plans from localStorage:', error)
+      return []
+    }
+  })
+  
   const [showForm, setShowForm] = useState(false)
   const [formData, setFormData] = useState({
     title: '',
@@ -11,6 +35,15 @@ const DatePlanner = ({ selectedDate, setSelectedDate }) => {
     location: '',
     notes: ''
   })
+
+  // Save plans to localStorage whenever plans change
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(plans))
+    } catch (error) {
+      console.error('Error saving plans to localStorage:', error)
+    }
+  }, [plans])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -24,6 +57,22 @@ const DatePlanner = ({ selectedDate, setSelectedDate }) => {
   const handleDelete = (id) => {
     setPlans(plans.filter(plan => plan.id !== id))
   }
+
+  // Sort plans by date (desc) and time (desc)
+  const sortedPlans = [...plans].sort((a, b) => {
+    // First compare by date (descending)
+    if (a.date !== b.date) {
+      return b.date.localeCompare(a.date)
+    }
+    // If dates are equal, compare by time (descending)
+    if (a.time && b.time) {
+      return b.time.localeCompare(a.time)
+    }
+    // If one has time and the other doesn't, prioritize the one with time
+    if (a.time && !b.time) return -1
+    if (!a.time && b.time) return 1
+    return 0
+  })
 
   return (
     <section id="planner" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
@@ -137,7 +186,7 @@ const DatePlanner = ({ selectedDate, setSelectedDate }) => {
             </div>
           ) : (
             <div className="space-y-4">
-              {plans.map((plan) => (
+              {sortedPlans.map((plan) => (
                 <div
                   key={plan.id}
                   className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all"
@@ -157,7 +206,7 @@ const DatePlanner = ({ selectedDate, setSelectedDate }) => {
                         {plan.time && (
                           <div className="flex items-center gap-2">
                             <Clock className="h-4 w-4" />
-                            <span>{plan.time}</span>
+                            <span>{formatTime12Hour(plan.time)}</span>
                           </div>
                         )}
                         {plan.location && (

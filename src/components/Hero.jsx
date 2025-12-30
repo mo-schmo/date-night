@@ -23,10 +23,10 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all transform hover:scale-105">
+            <button role='anchor' onClick={() => window.location.href = '#ideas'} className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all transform hover:scale-105">
               Explore Ideas
             </button>
-            <button className="bg-white text-gray-700 px-8 py-4 rounded-full text-lg font-semibold border-2 border-gray-300 hover:border-pink-500 hover:text-pink-500 transition-all">
+            <button role='anchor' onClick={() => window.location.href = '#planner'} className="bg-white text-gray-700 px-8 py-4 rounded-full text-lg font-semibold border-2 border-gray-300 hover:border-pink-500 hover:text-pink-500 transition-all">
               Start Planning
             </button>
           </div>
