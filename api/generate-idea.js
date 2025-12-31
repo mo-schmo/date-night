@@ -87,21 +87,21 @@ async function callHuggingFace(apiKey, params) {
 function buildPrompt(params) {
   const { mood, budget, location, timeOfDay, occasion } = params
   
-  let prompt = `Generate a creative and romantic date night idea. `
+  let prompt = `Generate a creative and romantic date night idea.\n`
   
-  prompt += `Mood: ${mood}. `
-  prompt += `Budget: ${budget}. `
+  prompt += `Mood: ${mood}.\n`
+  prompt += `Budget: ${budget}.\n`
   
   if (location) {
-    prompt += `Location preference: ${location}. `
+    prompt += `Location preference: ${location}.\n`
   }
   
   if (timeOfDay) {
-    prompt += `Time of day: ${timeOfDay}. `
+    prompt += `Time of day: ${timeOfDay}.\n`
   }
   
   if (occasion) {
-    prompt += `Occasion: ${occasion}. `
+    prompt += `Occasion: ${occasion}.\n`
   }
   
   prompt += `\n\nRespond in this exact format:\nTitle: [Creative title]\nDescription: [2-3 sentence description of the date idea]\n\nMake it specific, romantic, and actionable.`
