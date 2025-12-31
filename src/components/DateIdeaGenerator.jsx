@@ -111,14 +111,21 @@ const DateIdeaGenerator = ({ onIdeaGenerated, onClose }) => {
         <div className="p-6">
           {!generatedIdea ? (
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                   Mood <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={formData.mood}
                   onChange={(e) => setFormData({ ...formData, mood: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 shadow-sm hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-200 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                    backgroundPosition: 'right 0.75rem center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '1.5em 1.5em',
+                    paddingRight: '2.75rem'
+                  }}
                   required
                 >
                   {moods.map((mood) => (
@@ -129,14 +136,21 @@ const DateIdeaGenerator = ({ onIdeaGenerated, onClose }) => {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-1">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                   Budget <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={formData.budget}
                   onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 shadow-sm hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-200 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                    backgroundPosition: 'right 0.75rem center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '1.5em 1.5em',
+                    paddingRight: '2.75rem'
+                  }}
                   required
                 >
                   {budgets.map((budget) => (
@@ -147,27 +161,34 @@ const DateIdeaGenerator = ({ onIdeaGenerated, onClose }) => {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Location (optional)
+              <div className="space-y-1">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
+                  Location <span className="text-gray-500 text-xs font-normal">(optional)</span>
                 </label>
                 <input
                   type="text"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 shadow-sm placeholder:text-gray-400 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-200"
                   placeholder="e.g., New York, Beach, Park"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Time of Day (optional)
+              <div className="space-y-1">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
+                  Time of Day <span className="text-gray-500 text-xs font-normal">(optional)</span>
                 </label>
                 <select
                   value={formData.timeOfDay}
                   onChange={(e) => setFormData({ ...formData, timeOfDay: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 shadow-sm hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-200 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                    backgroundPosition: 'right 0.75rem center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '1.5em 1.5em',
+                    paddingRight: '2.75rem'
+                  }}
                 >
                   {timeOptions.map((time) => (
                     <option key={time.value} value={time.value}>
@@ -177,14 +198,21 @@ const DateIdeaGenerator = ({ onIdeaGenerated, onClose }) => {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Occasion (optional)
+              <div className="space-y-1">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
+                  Occasion <span className="text-gray-500 text-xs font-normal">(optional)</span>
                 </label>
                 <select
                   value={formData.occasion}
                   onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-900 shadow-sm hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-200 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                    backgroundPosition: 'right 0.75rem center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '1.5em 1.5em',
+                    paddingRight: '2.75rem'
+                  }}
                 >
                   {occasions.map((occasion) => (
                     <option key={occasion.value} value={occasion.value}>
@@ -195,37 +223,37 @@ const DateIdeaGenerator = ({ onIdeaGenerated, onClose }) => {
               </div>
 
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+                <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start gap-3 shadow-sm">
                   <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-red-800">Error</p>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-red-800">Error</p>
                     <p className="text-sm text-red-700 mt-1">{error}</p>
                   </div>
                 </div>
               )}
 
-              <div className="flex gap-3">
+              <div className="flex gap-3 pt-2">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3.5 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
                       <Loader2 className="h-5 w-5 animate-spin" />
-                      Generating...
+                      <span>Generating...</span>
                     </>
                   ) : (
                     <>
                       <Sparkles className="h-5 w-5" />
-                      Generate Idea
+                      <span>Generate Idea</span>
                     </>
                   )}
                 </button>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:border-gray-400 transition-all"
+                  className="px-6 py-3.5 bg-white border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-gray-400 hover:bg-gray-50 active:scale-[0.98] transition-all duration-200"
                 >
                   Cancel
                 </button>
